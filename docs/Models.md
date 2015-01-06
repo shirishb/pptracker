@@ -9,24 +9,31 @@ Project 1..many Activity
 | id | Integer | Primary key | |
 | tag | String(40) | Unique, lower case alphabet only (a-z) |  |
 | name | String(80) | | |
-| type | Enum | | |
 | date_started | Date | Date <= today | |
 | date_finished | Date | Date <= today | |
 | priority | Integer| 0-255 | |
-| isbn | | | | Applies to books only |
 | activities | | | |
+| type | Enum | | \"book\" |
+| isbn | | | | Applies to books only |
 
-### Tasks
+### Activity
 | Attribute | Type | Validation rules | Notes |
 | --- | --- | --- | --- |
 | id | Integer | Primary key | |
 | project_id | Integer | Foreign key | |
-| description | | | |
-| date_started | Date | | |
-| date_finished | Date | | |
+| description | String (80) | | |
+| date_started | Date | Date <= today | |
+| date_finished | Date | Date <= today | |
 | priority | Integer| 0-255 | |
-| estimated_days | | | |
-| http_url | String | | |
-| date_visited | Date | | |
-| summary | | | |
+| type | Enum | | \"link\" |
+| int_data | Integer | | Type specific integer value |
+| int_unit | String(16) | | |
+| string_data | String | | Type specific string value |
+| date_planned | Date | Date >= today, data_started = date_finished = NULL | |
+| estimated_days | Integer | >=0 | |
 
+## Version History
+
+| Version | Note |
+| --- | --- |
+| 0.1 | Creation Project, Tasks |
