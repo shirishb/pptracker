@@ -27,14 +27,18 @@ Simple tool to keep track of measurable activities over time.
     - Size of backlog
 
 #### Plan
-- [ ] Phase 1 - Command line tool (Python+sqlalchemy)
-- [ ] Phase 2 - Analysis of raw data (R)
-- [ ] Phase 3 - GUI (Qt/C++)
+
+- Current:
+    - [ ] Command line tool (Python+sqlalchemy)
+    - [ ] Analysis of raw data (R)
+- Future:
+    - [ ] GUI (Qt/C++)
+    - [ ] iOS App (Objective-C)
 
 #### Tasks
 
-- [ ] Activity list (design + document)
-- [ ] DB layout (design + implement models)
+- [X] Activity list (design + document)
+- [X] DB layout (design + implement models)
 - [ ] Command line interface (design + implement)
 - [ ] DB versioning and migration (alembic) (implement)
 
