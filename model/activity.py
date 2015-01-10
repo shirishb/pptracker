@@ -1,4 +1,5 @@
-import model
+from model import *
+
 from sqlalchemy import Column, ForeignKey, func
 from sqlalchemy.types import String, Integer, Date, Enum
 from sqlalchemy.orm import relationship, backref
@@ -11,8 +12,9 @@ ACTIVITY_TYPE = {
     "http_url" : "",
 }
 
-class Activity(model.Base):
+class Activity(Base):
     __tablename__ = "activity"
+
     id = Column(Integer, primary_key=True)
     project_id = Column(Integer, ForeignKey("project.id"))
     description = Column(String(80), nullable=False)
@@ -25,14 +27,15 @@ class Activity(model.Base):
     date_planned = Column(Date)
     estimated_days = Column(Integer)
 
+    __table_args__ = (
+        CheckConstraint(CONSTRAINT_PRIORITY, name="cst_priority"),
+        CheckConstraint(CONSTRAINT_DATE_BEFORE.format("date_started"), name="cst_date_started"),
+        CheckConstraint(CONSTRAINT_DATE_BEFORE.format("date_finished"), name="cst_date_finished"),
+        CheckConstraint(CONSTRAINT_DATE_AFTER.format("date_planned"), name="cst_date_planned"),
+        CheckConstraint(CONSTRAINT_UNSIGNED_INTEGER.format("estimated_days"), name="cst_estimated_days"),
+    )
+
     def __repr__(self):
         return "Activity(id=%r, project_id=%r, started=%r, priority=%r)" % \
             (self.id, self.project_id, self.date_started, self.priority)
-
-# Constraints
-Activity.__table__.append_constraint(CheckConstraint(model.CONSTRAINT_PRIORITY, name="cst_priority"))
-Activity.__table__.append_constraint(CheckConstraint(model.CONSTRAINT_DATE_BEFORE.format("date_started"), name="cst_date_started"))
-Activity.__table__.append_constraint(CheckConstraint(model.CONSTRAINT_DATE_BEFORE.format("date_finished"), name="cst_date_finished"))
-Activity.__table__.append_constraint(CheckConstraint(model.CONSTRAINT_DATE_AFTER.format("date_planned"), name="cst_date_planned"))
-Activity.__table__.append_constraint(CheckConstraint(model.CONSTRAINT_UNSIGNED_INTEGER.format("estimated_days"), name="cst_estimated_days"))
 
